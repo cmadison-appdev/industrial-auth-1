@@ -66,7 +66,7 @@ class PhotosController < ApplicationController
 
     def ensure_current_user_is_owner
       if current_user != @photo.owner
-        redirect_back fallback_location: root_url, alert: "Permission denied"
+        redirect_back fallback_location: root_url, alert: "You may not edit or delete another user's photo."
       end
     end
 

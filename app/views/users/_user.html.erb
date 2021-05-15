@@ -11,8 +11,14 @@
         <span class="badge badge-secondary">
           <%= user.private? ? "Private" : "Public" %>
         </span>
+        </div>
+        <div>
+        <span class="badge badge-secondary">
+          Request status: <%= @request_status.status %>
+        </span>
       </div>
     </div>
+  
 
     <div class="row mb-4">
       <div class="col">
@@ -50,7 +56,7 @@
       </div>
 
       <div class="col">
-        <% if @current_user == user %>
+        <% if current_user == @user %>
           <%=
             link_to "#",
               data: { 
@@ -100,7 +106,7 @@
     <div class="row mb-4">
       <div class="col">
         <% follow_request = current_user.sent_follow_requests.find_by(recipient: @user) %>
-        <% if follow_request %>
+        <% if !follow_request.rejected? %>
           <%= link_to follow_request, method: :delete, class: "btn btn-outline-secondary btn-block" do %>
             <% if follow_request.pending? %>
               Un-request
@@ -108,6 +114,8 @@
               Un-follow
             <% end %>
           <% end %>
+        <% elsif follow_request.rejected? %>
+          Sorry, your request to follow <%= @user.username %> was rejected.
         <% else %>
           <%= render "follow_requests/form", follow_request: @user.received_follow_requests.build %>
         <% end %>

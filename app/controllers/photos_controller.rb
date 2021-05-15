@@ -9,6 +9,7 @@ class PhotosController < ApplicationController
 
   # GET /photos/1 or /photos/1.json
   def show
+    @view_permission = current_user.view_permission
   end
 
   # GET /photos/new

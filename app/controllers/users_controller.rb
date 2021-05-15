@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[ show liked feed followers following discover ]
   before_action :get_request_status, only: %i[ show liked feed followers following discover ]
   before_action :profile_view_permission, only: %i[ show liked feed followers following discover ]
+  before_action :check_eligibility, only: %i[ feed discover ]
 
 
   private
@@ -22,5 +23,11 @@ class UsersController < ApplicationController
     def profile_view_permission
       @view_permission = current_user == @user || !@user.private? || @request_status.accepted?
       #@view_permission = true 
+    end
+
+    def check_eligibility
+      if current_user != @user
+        redirect_back fallback_location: root_url, alert: "Nice try."
+      end
     end
 end

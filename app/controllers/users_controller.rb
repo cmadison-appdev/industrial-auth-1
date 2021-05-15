@@ -20,6 +20,6 @@ class UsersController < ApplicationController
     end 
 
     def profile_view_permission
-      @view_permission = current_user == @user || !@user.private? || @request_status.accepted? 
+      @view_permission = current_user == @user || !@user.private? || @request_status.accepted?
     end
 end

@@ -1,4 +1,4 @@
-<%# if @view_permission %>
+<%# if @request_status.accepted? %>
   <div class="row mb-4">
     <div class="col-md-6 offset-md-3">
       <%= render "users/user", user: @user %>
